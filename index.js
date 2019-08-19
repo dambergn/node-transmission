@@ -56,6 +56,12 @@ rl.on('line', (input) => {
     cmd.get(transmissionList(), function (err, data, stderr) {
       console.log(data)
     });
+  } else if (input.split(' ')[0] === 'ts-test') {
+    let url = 'http://releases.ubuntu.com/19.04/ubuntu-19.04-desktop-amd64.iso.torrent'
+    let path = '/media/downloads';
+    cmd.get(transmissionDownload(url, path), function (err, data, stderr) {
+      console.log(data)
+    });
   } else {
     console.log(input, 'is not a valid input')
   };
@@ -110,4 +116,8 @@ const password = process.env.TRANS_PASSWORD
 
 function transmissionList() {
   return `transmission-remote -n ${username}:${password} -l`
+}
+
+function transmissionDownload(url, path){
+  return `transmission-remote -n ${username}:${password} -a ${url} -w ${path}`
 }
