@@ -48,13 +48,14 @@ rl.on('line', (input) => {
     nyaaSearch(input.substr(input.indexOf(' ') + 1))
   } else if (input.split(' ')[0] === 'pwd') {
     cmd.get('pwd', function (err, data, stderr) {
-        console.log('the current working dir is : ', data)
-      }
-    );
+      console.log('the current working dir is : ', data)
+    });
   } else if (input.split(' ')[0] === 'clear') {
     cmd.run('apt-get update');
   } else if (input.split(' ')[0] === 'ts-list') {
-    cmd.run(transmissionList());
+    cmd.get(transmissionList(), function (err, data, stderr) {
+      console.log(data)
+    });
   } else {
     console.log(input, 'is not a valid input')
   };
@@ -69,7 +70,7 @@ rl.on('line', (input) => {
 
 // cmd.run('touch example.created.file');
 
-function nyaaSearch(request){
+function nyaaSearch(request) {
   si.search(request, 20, {
     filter: 2,
   })
@@ -82,18 +83,18 @@ function nyaaSearch(request){
     }).catch((err) => console.log(err))
 }
 
-function nyaaUpdate(request){
+function nyaaUpdate(request) {
   si.search(request, 20, {
     filter: 2,
   })
     .then((data) => {
       let results = []
-      for(let i = 0; i < data.length; i++){
+      for (let i = 0; i < data.length; i++) {
         let episode = {
-          name : data[i].name,
-          timestamp : data[i].timestamp,
-          torrent : data[i].links.file,
-          magnet : data[i].links.magnet
+          name: data[i].name,
+          timestamp: data[i].timestamp,
+          torrent: data[i].links.file,
+          magnet: data[i].links.magnet
         }
         results.push(episode);
       }
@@ -107,6 +108,6 @@ function nyaaUpdate(request){
 const username = process.env.TRANS_USER
 const password = process.env.TRANS_PASSWORD
 
-function transmissionList(){
+function transmissionList() {
   return `'transmission-remote -n '${username}:${password} -l`
 }
