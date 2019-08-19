@@ -109,5 +109,5 @@ const username = process.env.TRANS_USER
 const password = process.env.TRANS_PASSWORD
 
 function transmissionList() {
-  return `'transmission-remote -n '${username}:${password} -l`
+  return `transmission-remote -n ${username}:${password} -l`
 }
