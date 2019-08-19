@@ -71,15 +71,6 @@ rl.on('line', (input) => {
   };
 });
 
-// cmd.get(
-//   'pwd',
-//   function (err, data, stderr) {
-//     console.log('the current working dir is : ', data)
-//   }
-// );
-
-// cmd.run('touch example.created.file');
-
 function nyaaSearch(request) {
   si.search(request, 20, {
     filter: 2,
@@ -107,9 +98,9 @@ function nyaaUpdate(request, path) {
           magnet: data[i].links.magnet
         }
         results.push(episode);
-        addTorrent(data[i].links.magnet, path)
+        addTorrent(data[i].links.magnet, path, data[i].name)
       }
-      console.log(results)
+      // console.log(results)
     }).catch((err) => console.log(err))
 }
 
@@ -127,10 +118,11 @@ function transmissionDownload(url, path){
   return `transmission-remote -n '${username}:${password}' -a ${url} -w ${path}`
 }
 
-function addTorrent(url, path){
+function addTorrent(url, path, name){
   cmd.get(transmissionDownload(url, path), function (err, data, stderr) {
-    if(err)console.log('err: ', err)
-    if(stderr)console.log('stderr: ', stderr)
-    console.log('success', data)
+    if(err)console.log('err: ', err);
+    if(stderr)console.log('stderr: ', stderr);
+    console.log('success:', data);
+    console.log('added: ', name);
   });
 }
