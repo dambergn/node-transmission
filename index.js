@@ -65,7 +65,7 @@ rl.on('line', (input) => {
       console.log('success', data)
     });
   } else if (input.split(' ')[0] === 'horriblesubs') {
-    nyaaUpdate('[HorribleSubs] [1080p]', /media/Anime/AnimeDL[sub])
+    nyaaUpdate('[HorribleSubs] [1080p]', '/media/Anime/AnimeDL[sub]')
   } else {
     console.log(input, 'is not a valid input')
   };
