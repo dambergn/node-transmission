@@ -17,7 +17,11 @@
   },
   "devDependencies": {},
   "scripts": {
+    "start": "nodemon --ignore 'modules/storage.json'",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "nodemonConfig":{
+    "ignore": ["./modules/storage.json"]
   },
   "keywords": [],
   "author": "",

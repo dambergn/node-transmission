@@ -3,9 +3,9 @@
 const fs = require('fs');
 require('dotenv').config();
 const { si, pantsu } = require('nyaapi')
+const storage = require('./storage.js')
 
-let lastTimeStamp = '';
-let torrentList = [];
+// let lastTimeStamp = 0;
 
 exports.Update = function (request, path) {
   si.search(request, 20, {
@@ -23,10 +23,10 @@ exports.Update = function (request, path) {
         results.push(episode);
         // addTorrent(data[i].links.magnet, path, data[i].name)
       }
-      console.log(results)
+      // console.log(results)
       // console.log('update hit')
       // torrentList = results
-      // timeStampCheck(results)
+      timeStampCheck(results)
     }).catch((err) => console.log(err))
 }
 
@@ -44,8 +44,18 @@ function addTorrent(url, path, name){
 }
 
 function timeStampCheck(torrentList){
-  for(let i = torrentList.length; i <= 0 ; i++){
-    console.log(torrentList[i]);
+  let reversedList = [];
+  // console.log('timeStampTest:', torrentList[0].timestamp);
+  for(let i = torrentList.length; i > 0 ; i--){
+    // console.log('timeStampTest:', torrentList[i-1].timestamp);
+    if(torrentList[i-1].timestamp >= storage.horribleSubsTimeStamp){
+      console.log(torrentList[i-1].timestamp, 'to' ,storage.horribleSubsTimeStamp)
+      // lastTimeStamp = torrentList[i-1].timestamp;
+      storage.horribleSubsTimeStamp = torrentList[i-1].timestamp;
+      reversedList.push(torrentList[i-1]);
+    }
   }
-  console.log('last: ', torrentList[torrentList.length]);
+  storage.updateLTS()
+  // console.log(reversedList);
+  // console.log('last: ', torrentList[torrentList.length-1]);
 }
