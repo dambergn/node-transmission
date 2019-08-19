@@ -14,10 +14,12 @@ try {
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const axios = require("axios");
+// const axios = require("axios");
 const { si, pantsu } = require('nyaapi')
 const cmd = require('node-cmd');
 const readline = require('readline');
+
+const horriblesubs = require('./modules/horriblesubs.js')
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -64,8 +66,10 @@ rl.on('line', (input) => {
       if(stderr)console.log('stderr: ', stderr)
       console.log('success', data)
     });
+  // } else if (input.split(' ')[0] === 'horriblesubs') {
+  //   nyaaUpdate('[HorribleSubs] [1080p]', '/media/Anime/AnimeDL[sub]')
   } else if (input.split(' ')[0] === 'horriblesubs') {
-    nyaaUpdate('[HorribleSubs] [1080p]', '/media/Anime/AnimeDL[sub]')
+    horriblesubs.Update('[HorribleSubs] [1080p]', '/media/Anime/AnimeDL[sub]')
   } else {
     console.log(input, 'is not a valid input')
   };
