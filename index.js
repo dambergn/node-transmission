@@ -60,7 +60,9 @@ rl.on('line', (input) => {
     let url = 'http://releases.ubuntu.com/19.04/ubuntu-19.04-desktop-amd64.iso.torrent'
     let path = '/media/downloads';
     cmd.get(transmissionDownload(url, path), function (err, data, stderr) {
-      console.log(data)
+      console.log('err: ', err)
+      console.log('success', data)
+      console.log('stderr: ', stderr)
     });
   } else {
     console.log(input, 'is not a valid input')
@@ -119,5 +121,5 @@ function transmissionList() {
 }
 
 function transmissionDownload(url, path){
-  return `transmission-remote -n ${username}:${password} -a ${url} -w ${path}`
+  return `transmission-remote -n '${username}:${password}' -a ${url} -w ${path}`
 }
