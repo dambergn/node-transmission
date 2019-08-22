@@ -19,7 +19,9 @@ const { si, pantsu } = require('nyaapi')
 const cmd = require('node-cmd');
 const readline = require('readline');
 
+const storage = require('./modules/storage.js')
 const horriblesubs = require('./modules/horriblesubs.js')
+const golumpa = require('./modules/golumpa.js')
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -62,14 +64,16 @@ rl.on('line', (input) => {
     let url = 'http://releases.ubuntu.com/19.04/ubuntu-19.04-desktop-amd64.iso.torrent'
     let path = '/media/downloads';
     cmd.get(transmissionDownload(url, path), function (err, data, stderr) {
-      if(err)console.log('err: ', err)
-      if(stderr)console.log('stderr: ', stderr)
+      if (err) console.log('err: ', err)
+      if (stderr) console.log('stderr: ', stderr)
       console.log('success', data)
     });
-  // } else if (input.split(' ')[0] === 'horriblesubs') {
-  //   nyaaUpdate('[HorribleSubs] [1080p]', '/media/Anime/AnimeDL[sub]')
-  } else if (input.split(' ')[0] === 'horriblesubs') {
-    horriblesubs.Update('[HorribleSubs] [1080p]', '/media/Anime/AnimeDL[sub]')
+    // } else if (input.split(' ')[0] === 'horriblesubs') {
+    //   nyaaUpdate('[HorribleSubs] [1080p]', '/media/Anime/AnimeDL[sub]')
+  } else if (input.split(' ')[0] === 'update') {
+    update()
+  } else if (input.split(' ')[0] === 'save') {
+    storage.updateLTS()
   } else {
     console.log(input, 'is not a valid input')
   };
@@ -118,15 +122,29 @@ function transmissionList() {
   return `transmission-remote -n '${username}:${password}' -l`
 }
 
-function transmissionDownload(url, path){
+function transmissionDownload(url, path) {
   return `transmission-remote -n '${username}:${password}' -a ${url} -w ${path}`
 }
 
-function addTorrent(url, path, name){
+function addTorrent(url, path, name) {
   cmd.get(transmissionDownload(url, path), function (err, data, stderr) {
-    if(err)console.log('err: ', err);
-    if(stderr)console.log('stderr: ', stderr);
+    if (err) console.log('err: ', err);
+    if (stderr) console.log('stderr: ', stderr);
     console.log('success:', data);
     console.log('added: ', name);
   });
 }
+
+function update(){
+  horriblesubs.Update('[HorribleSubs] [1080p]', '/media/Anime/AnimeDL[sub]')
+  golumpa.Update('Golumpa 1080', '/media/Anime/AnimeDL[dub]')
+  // storage.updateLTS()
+}
+
+let interval = 1000 * 60 * 60 //1 hour
+setInterval(function () {
+  update()
+  console.log(new Date());
+}, interval)
+
+// 60000 = 1 minute

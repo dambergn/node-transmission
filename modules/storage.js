@@ -4,9 +4,11 @@ const fs = require('fs');
 const storage = require('./storage.js')
 
 exports.horribleSubsTimeStamp = 0;
+exports.golumpaTimeStamp = 0;
 
 exports.updateLTS = function () {
   let storageJSON = {
+    golumpaTimeStamp : storage.golumpaTimeStamp,
     horribleSubsTimeStamp : storage.horribleSubsTimeStamp,
   }
   let data = JSON.stringify(storageJSON);

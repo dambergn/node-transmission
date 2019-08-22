@@ -2,6 +2,7 @@
 
 # Setting user permissions
 echo "Setting npm user home directory"
+sudo chown -R $USER:$(id -gn $USER) $HOME/
 sudo chown -R $USER:$(id -gn $USER) $HOME/.config
 
 # Create and setup .env file
