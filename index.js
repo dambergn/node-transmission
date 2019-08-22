@@ -19,9 +19,10 @@ const { si, pantsu } = require('nyaapi')
 const cmd = require('node-cmd');
 const readline = require('readline');
 
-const storage = require('./modules/storage.js')
-const horriblesubs = require('./modules/horriblesubs.js')
-const golumpa = require('./modules/golumpa.js')
+const storage = require('./modules/storage.js');
+const horriblesubs = require('./modules/horriblesubs.js');
+const golumpa = require('./modules/golumpa.js');
+const kaidubs = require('./modules/kaidubs.js');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -136,8 +137,9 @@ function addTorrent(url, path, name) {
 }
 
 function update(){
-  horriblesubs.Update('[HorribleSubs] [1080p]', '/media/Anime/AnimeDL[sub]')
-  golumpa.Update('Golumpa 1080', '/media/Anime/AnimeDL[dub]')
+  // horriblesubs.Update('[HorribleSubs] [1080p]', '/media/Anime/AnimeDL[sub]');
+  // golumpa.Update('Golumpa 1080', '/media/Anime/AnimeDL[dub]');
+  kaidubs.kaidubsList();
   // storage.updateLTS()
 }
 

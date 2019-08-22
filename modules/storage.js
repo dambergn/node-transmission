@@ -5,11 +5,17 @@ const storage = require('./storage.js')
 
 exports.horribleSubsTimeStamp = 0;
 exports.golumpaTimeStamp = 0;
+exports.kaidubs = {
+  dragonBallSuperTimeStamp : 0,
+}
 
 exports.updateLTS = function () {
   let storageJSON = {
     golumpaTimeStamp : storage.golumpaTimeStamp,
     horribleSubsTimeStamp : storage.horribleSubsTimeStamp,
+    kaidubs : {
+      dragonBallSuperTimeStamp : storage.dragonBallSuperTimeStamp,
+    }
   }
   let data = JSON.stringify(storageJSON);
   fs.writeFileSync('./modules/storage.json', data);
