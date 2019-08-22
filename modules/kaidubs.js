@@ -25,7 +25,8 @@ exports.Update = function (request, path) {
         }
         results.push(episode);
       }
-      timeStampCheck(results, path) // Enable to download
+      console.log('KaiDubs:', results)
+      // timeStampCheck(results, path) // Enable to download
     }).catch((err) => console.log(err))
 }
 
@@ -67,5 +68,9 @@ function timeStampCheck(torrentList, path){
 }
 
 exports.kaidubsList = function () {
-  kaidubs.Update('kaidubs dragon ball super dual audio 1080', '/media/Anime/AnimeDL[dual]')
+  kaidubs.Update('kaidubs dragon ball super dual audio 1080', '/media/Anime/AnimeDL[dual]');
+  kaidubs.Update('kaidubs Mobile Suit Gundam; The Origin (TV) 1080', '/media/Anime/AnimeDL[dub]');
+  kaidubs.Update('kaidubs Boruto Naruto Next Generations 1080', '/media/Anime/AnimeDL[dub]');
+  kaidubs.Update('kaidubs Lupin III Part V 1080', '/media/Anime/AnimeDL[dub]');
+  kaidubs.Update('kaidubs Attack on Titan S3 1080', '/media/Anime/AnimeDL[dub]');
 }

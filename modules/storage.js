@@ -21,6 +21,12 @@ exports.updateLTS = function () {
   fs.writeFileSync('./modules/storage.json', data);
 }
 
+try {
+  if (!fs.existsSync('storage.json')) {
+    storage.updateLTS();
+  }
+} catch (err) { console.error(err) }
+
 function loadLTS() {
   fs.readFile('./modules/storage.json', (err, data) => {
     if(err) throw err;
