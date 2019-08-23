@@ -35,7 +35,7 @@ const username = process.env.TRANS_USER
 const password = process.env.TRANS_PASSWORD
 
 function transmissionDownload(url, path){
-  return `transmission-remote -n '${username}:${password}' -a ${url} -ph -w ${path}`
+  return `transmission-remote -n '${username}:${password}' -w ${path} -a ${url}`
 }
 
 function addTorrent(url, path, name){

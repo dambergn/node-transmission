@@ -137,9 +137,9 @@ function addTorrent(url, path, name) {
 }
 
 function update(){
-  // horriblesubs.Update('[HorribleSubs] [1080p]', '/media/Anime/AnimeDL[sub]');
-  // golumpa.Update('Golumpa 1080', '/media/Anime/AnimeDL[dub]');
-  kaidubs.kaidubsList();
+  horriblesubs.Update('[HorribleSubs] [1080p]', '/media/Anime/AnimeDL[sub]');
+  golumpa.Update('Golumpa 1080', '/media/Anime/AnimeDL[dub]');
+  // kaidubs.kaidubsList();
   // storage.updateLTS()
 }
 
