@@ -4,8 +4,8 @@ const fs = require('fs');
 require('dotenv').config();
 const { si, pantsu } = require('nyaapi')
 const cmd = require('node-cmd');
-const storage = require('./storage.js')
 
+const storage = require('./storage.js')
 const kaidubs = require('./kaidubs.js')
 
 exports.Update = function (request, path, timeStamp) {
@@ -46,30 +46,37 @@ function addTorrent(url, path, name){
 
 function timeStampCheck(torrentList, path, upTimeStamp, request){
   let reversedList = [];
+  let checking = storage.kaidubs[upTimeStamp]
   for(let i = torrentList.length; i > 0 ; i--){
-    if(torrentList[i-1].timestamp >= upTimeStamp + 1){
-      console.log(torrentList[i-1].timestamp, 'to', upTimeStamp + 1)
-      upTimeStamp = torrentList[i-1].timestamp;
+    if(torrentList[i-1].timestamp >= checking + 1){
+      console.log(torrentList[i-1].timestamp, 'to', checking + 1)
+      checking = torrentList[i-1].timestamp;
+      storage.kaidubs[upTimeStamp] = checking
       // console.log('upate', upTimeStamp)
       reversedList.push(torrentList[i-1]);
     }
   }
 
   if (reversedList.length === 0){
-    console.log(request, timeStamp)
+    console.log(request, 'is up to date')
   } else {
     for(let j = 0; j < reversedList.length; j++){
       let url = reversedList[j].magnet;
       let name = reversedList[j].name;
-      // addTorrent(url, path, name);
+      // console.log('adding:', name)
+      addTorrent(url, path, name);
     }
   }
 }
 
+
+
 exports.kaidubsList = function () {
-  kaidubs.Update('kaidubs dragon ball super dual audio 1080', '/media/Anime/AnimeDL[dual]', storage.kaidubs.dragonBallSuperTS);
-  kaidubs.Update('kaidubs Mobile Suit Gundam; The Origin (TV) 1080', '/media/Anime/AnimeDL[dub]', storage.kaidubs.mobileSuitGundamTS);
-  kaidubs.Update('kaidubs Boruto Naruto Next Generations 1080', '/media/Anime/AnimeDL[dub]', storage.kaidubs.borutoTS);
-  kaidubs.Update('kaidubs Lupin III Part V 1080', '/media/Anime/AnimeDL[dub]', storage.kaidubs.lupin3PVTS);
-  kaidubs.Update('kaidubs Attack on Titan S3 1080', '/media/Anime/AnimeDL[dub]', storage.kaidubs.attackOnTitanS3TS);
+  kaidubs.Update('kaidubs dragon ball super dual audio 1080', '/media/Anime/AnimeDL[dual]', 'dragonBallSuperTS');
+  setTimeout(function(){
+    kaidubs.Update('kaidubs Mobile Suit Gundam\; The Origin (TV) 1080', '/media/Anime/AnimeDL[dub]', 'mobileSuitGundamTS');
+  }, 3000);
+  kaidubs.Update('kaidubs Boruto Naruto Next Generations 1080', '/media/Anime/AnimeDL[dub]', 'borutoTS');
+  kaidubs.Update('kaidubs Lupin III Part V 1080', '/media/Anime/AnimeDL[dub]', 'lupin3PVTS');
+  kaidubs.Update('kaidubs Attack on Titan S3 1080', '/media/Anime/AnimeDL[dub]', 'attackOnTitanS3TS');
 }

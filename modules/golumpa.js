@@ -4,8 +4,8 @@ const fs = require('fs');
 require('dotenv').config();
 const { si, pantsu } = require('nyaapi')
 const cmd = require('node-cmd');
-const sys = require('sys');
-const exec = require('child_process').exec;
+// const sys = require('sys');
+// const exec = require('child_process').exec;
 const storage = require('./storage.js')
 
 // let lastTimeStamp = 0;
@@ -43,21 +43,21 @@ function transmissionDownload(url, path) {
 
 function addTorrent(url, path, name) {
   let command = transmissionDownload(url, path)
-  console.log('command:', command)
-  exec(command, function (err, stdout, stderr) {
-    if (err) console.log('err: ', err);
-    if (stderr) console.log('stderr: ', stderr);
-    console.log('success:', stdout);
-    console.log('added: ', name);
-  })
-
-  // cmd.get(command, function (err, data, stderr) {
-  //   // if(err)console.log('err: ', err);
-  //   // if(stderr)console.log('stderr: ', stderr);
-  //   console.log('command:', command)
-  //   console.log('success:', data);
+  // console.log('command:', command)
+  // exec(command, function (err, stdout, stderr) {
+  //   if (err) console.log('err: ', err);
+  //   if (stderr) console.log('stderr: ', stderr);
+  //   console.log('success:', stdout);
   //   console.log('added: ', name);
-  // });
+  // })
+
+  cmd.get(command, function (err, data, stderr) {
+    if(err)console.log('err: ', err);
+    if(stderr)console.log('stderr: ', stderr);
+    // console.log('command:', command)
+    console.log('success:', data);
+    console.log('added: ', name);
+  });
 }
 
 function timeStampCheck(torrentList, path) {

@@ -40,8 +40,8 @@ function transmissionDownload(url, path){
 
 function addTorrent(url, path, name){
   cmd.get(transmissionDownload(url, path), function (err, data, stderr) {
-    // if(err)console.log('err: ', err);
-    // if(stderr)console.log('stderr: ', stderr);
+    if(err)console.log('err: ', err);
+    if(stderr)console.log('stderr: ', stderr);
     console.log('success:', data);
     console.log('added: ', name);
   });

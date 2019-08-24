@@ -6,11 +6,11 @@ const storage = require('./storage.js')
 exports.horribleSubsTimeStamp = 0;
 exports.golumpaTimeStamp = 0;
 exports.kaidubs = {
-  dragonBallSuperTS : 0,
-  mobileSuitGundamTS : 0,
-  borutoTS : 0,
-  lupin3PVTS : 0,
-  attackOnTitanS3TS : 0,
+  dragonBallSuperTS : 5,
+  mobileSuitGundamTS : 5,
+  borutoTS : 5,
+  lupin3PVTS : 5,
+  attackOnTitanS3TS : 5,
 }
 
 exports.updateLTS = function () {
@@ -30,7 +30,8 @@ exports.updateLTS = function () {
 }
 
 try {
-  if (!fs.existsSync('storage.json')) {
+  if (fs.existsSync('storage.json')) {
+    console.log('Creating base storage.json')
     storage.updateLTS();
   }
 } catch (err) { console.error(err) }

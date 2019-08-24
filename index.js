@@ -136,11 +136,14 @@ function addTorrent(url, path, name) {
   });
 }
 
-function update(){
+function update() {
   horriblesubs.Update('[HorribleSubs] [1080p]', '/media/Anime/AnimeDL[sub]');
   golumpa.Update('Golumpa 1080', '/media/Anime/AnimeDL[dub]');
-  // kaidubs.kaidubsList();
-  // storage.updateLTS()
+  kaidubs.kaidubsList();
+  setTimeout(function () {
+    storage.updateLTS();
+    console.log('Autosave Complete');
+  }, 10000);
 }
 
 let interval = 1000 * 60 * 60 //1 hour
